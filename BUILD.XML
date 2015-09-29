@@ -1,0 +1,18 @@
+<?xml version="1.0"?> 
+
+<project name="tdatp2" default="compilar" basedir="."> 
+
+     <property name="src" value="."/> 
+     <property name="build" value="build"/>
+
+     <target name="creardir">  
+          <mkdir dir="${build}"/>
+     </target>
+
+     <target name="compilar" depends="creardir">                     
+          <javac srcdir="${src}" destdir="${build}"/> 
+     </target>
+	
+</project>
+
+
