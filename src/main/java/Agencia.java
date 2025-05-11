@@ -2,17 +2,17 @@
 import java.util.ArrayList;
 import java.util.Iterator;
 /*
- * Esta clase representa a una agencia que contiene la información de todos
+ * Esta clase representa a una agencia que contiene la informaciÃ³n de todos
  * los hombres y mujeres (incluido su ranking).
- * Además, la agencia es la que se encarga de asignarle un número único a los
+ * AdemÃ¡s, la agencia es la que se encarga de asignarle un nÃºmero Ãºnico a los
  * hombres o a las mujeres. 
  */
 public class Agencia{
 	private ArrayList hombres;
 	private ArrayList mujeres;
-	private ArrayList parejas; //Solución transitoria
-	private ArrayList solucion; //Solución definitiva.
-	private int cantParejas; //Cuenta la cantidad de parejas no rotas de la colección "parejas"
+	private ArrayList parejas; //SoluciÃ³n transitoria
+	private ArrayList solucion; //SoluciÃ³n definitiva.
+	private int cantParejas; //Cuenta la cantidad de parejas no rotas de la colecciÃ³n "parejas"
 							 //(usado en el algoritmo de Gale & Shapley).
 	
 	public Agencia (){
@@ -62,11 +62,11 @@ public class Agencia{
 				hombre.mejorPretendido().addPretendiente(hombre);
 				//El hombre es ahora pretendiente de su mujer favorita.
 			}
-			//Cada mujer se empareja con el pretendiente que más le agrade.
+			//Cada mujer se empareja con el pretendiente que mÃ¡s le agrade.
 			for(int i=0; i<this.cantMujeres();i++){
 				Individuo mujer = this.getMujer(i);
 				Individuo hombre = mujer.pretendienteFavorito();
-				if (hombre != null) { //Si alguien se le había declarado a la mujer.
+				if (hombre != null) { //Si alguien se le habÃ­a declarado a la mujer.
 					Pareja pareja = new Pareja(hombre,mujer);
 					parejas.add(pareja);
 					cantParejas++;
@@ -75,18 +75,18 @@ public class Agencia{
 			}
 
 			//RESTO DE LAS ETAPAS
-			while(!listoGS()){//Mientras no esté lista la asignación...
-				//Cada hombre elige a la mujer favorita que no lo ha rechazado aún.
+			while(!listoGS()){//Mientras no estÃ© lista la asignaciÃ³n...
+				//Cada hombre elige a la mujer favorita que no lo ha rechazado aÃºn.
 				for(int i=0;i<this.cantHombres();i++){
 					Individuo hombre = this.getHombre(i);
 					if(hombre.isSoltero()){
 						Individuo mujer = hombre.mejorPretendido();
 						/*El hombre es ahora pretendiente de la mujer preferida que no lo
-						  rechazó aún.*/
+						  rechazÃ³ aÃºn.*/
 						mujer.addPretendiente(hombre);
 						if (!mujer.isSoltero()) mujer.addPretendiente(mujer.getPareja().getHombre());
-						/*La última línea es para que cuando mujer devuelva su preten-
-						  diente favorito, también tenga en cuenta a su marido.*/
+						/*La Ãºltima lÃ­nea es para que cuando mujer devuelva su preten-
+						  diente favorito, tambiÃ©n tenga en cuenta a su marido.*/
 					}
 				}
 				//Cada mujer elige entre los pretendientes y su marido (si tiene).
@@ -94,7 +94,7 @@ public class Agencia{
 					Individuo mujer = this.getMujer(i);
 					Individuo hombre = mujer.pretendienteFavorito();
 					if (hombre != null) {
-					//Si se le declaró alguien en esta ronda a la mujer.
+					//Si se le declarÃ³ alguien en esta ronda a la mujer.
 						//Si la mujer tiene pareja, que rompa con ella.
 						if (!mujer.isSoltero()){
 							mujer.getPareja().romper();
@@ -108,16 +108,16 @@ public class Agencia{
 				}
 			}
 			quitarParejasRotas (parejas);
-			/*El último paso se debe a que "parejas" está llena de parejas que han ro-
-			  to y no fueron removidas de allí. Esto se debe a que es más eficiente
-			  hacer sólo un recorrido a la colección removiendo todas las parejas rotas
-			  que ir haciéndolos durante la ejecución del algoritmo.*/
+			/*El Ãºltimo paso se debe a que "parejas" estÃ¡ llena de parejas que han ro-
+			  to y no fueron removidas de allÃ­. Esto se debe a que es mÃ¡s eficiente
+			  hacer sÃ³lo un recorrido a la colecciÃ³n removiendo todas las parejas rotas
+			  que ir haciÃ©ndolos durante la ejecuciÃ³n del algoritmo.*/
 			solucion = parejas;
 			return solucion;
 		}
 
 		/*
-		 * La asignación está lista solo si se han emparejado todos los hombres (y,
+		 * La asignaciÃ³n estÃ¡ lista solo si se han emparejado todos los hombres (y,
 		 * por ende, todas las mujeres).
 		 */
 		private boolean listoGS(){
@@ -154,13 +154,13 @@ public class Agencia{
 		}
 
 		/*
-		 * Parte principal de la solución por backtracking.
-		 * OBS: Durante la ejecución de este algoritmo, cantParejas equivale
+		 * Parte principal de la soluciÃ³n por backtracking.
+		 * OBS: Durante la ejecuciÃ³n de este algoritmo, cantParejas equivale
 		 * a parejas.size()
 		 */
 		private void extender (int hombreActual){
 			if (!this.listoBT()){
-			//Si aún no está lista la solución => se intenta expanderla.
+			//Si aÃºn no estÃ¡ lista la soluciÃ³n => se intenta expanderla.
 				for (int mujer = 0;mujer < this.cantMujeres();mujer++){
 				//Se prueba con todas las mujeres posibles.
 					Pareja parejaNueva = new Pareja (this.getHombre(hombreActual),this.getMujer(mujer));
@@ -185,22 +185,22 @@ public class Agencia{
 		}
 
 		/*
-		 * La asignación está lista si es factible y además todos los hombres (y, por
-		 * ende, las mujeres) están en pareja.
+		 * La asignaciÃ³n estÃ¡ lista si es factible y ademÃ¡s todos los hombres (y, por
+		 * ende, las mujeres) estÃ¡n en pareja.
 		 */
 		private boolean listoBT(){
 			return(esEstable() && (parejas.size() == this.cantHombres()));
 		}
 
 		/*
-		 * Devuelve true si la asignación es estable (no tiene pares bloqueantes).
+		 * Devuelve true si la asignaciÃ³n es estable (no tiene pares bloqueantes).
 		 */
 		private boolean esEstable(){
-			//Una asignación vacía o con sólo una pareja es estable.
+			//Una asignaciÃ³n vacÃ­a o con sÃ³lo una pareja es estable.
 			if ((parejas.size() == 0)||(parejas.size() == 1)) return true; 
-			//Dado que las n-1 parejas ya han sido chequeadas entre sí, sólo hay que
-			//verificar la estabilidad entre la nueva pareja y todas las demás.
-			Pareja p = (Pareja) parejas.get(parejas.size()-1); //La última pareja agregada
+			//Dado que las n-1 parejas ya han sido chequeadas entre sÃ­, sÃ³lo hay que
+			//verificar la estabilidad entre la nueva pareja y todas las demÃ¡s.
+			Pareja p = (Pareja) parejas.get(parejas.size()-1); //La Ãºltima pareja agregada
 			for(int i=0; (i+1)<parejas.size() ;i++){
 				if (this.esBloqueante((Pareja) parejas.get(i),p)) return false;
 			}
@@ -209,7 +209,7 @@ public class Agencia{
 
 		/*
 		 * Devuelve "true" si y solo si un hombre y una mujer de las dos parejas
-		 * distintas preferiría estar casado entre sí en lugar de con su compañero
+		 * distintas preferirÃ­a estar casado entre sÃ­ en lugar de con su compaÃ±ero
 		 * actual.
 		 */
 		private boolean esBloqueante(Pareja p1, Pareja p2){
@@ -219,17 +219,17 @@ public class Agencia{
 			Individuo m2 = p2.getMujer();
 
 			if ((h1 == h2) || (m1 == m2)) return true; 
-			//Si al hombre 1 le gusta más la mujer 2 que su esposa, la mujer 1, y
-			//a la mujer 2 le ocurre lo mismo con él, hay inestabilidad.
+			//Si al hombre 1 le gusta mÃ¡s la mujer 2 que su esposa, la mujer 1, y
+			//a la mujer 2 le ocurre lo mismo con Ã©l, hay inestabilidad.
 			if ((h1.getPuesto(m2) < h1.getPuesto(m1)) &&
 				 (m2.getPuesto(h1) < m2.getPuesto(h2)))
 				return true;
-			//Si a la mujer 1 le gusta más el hombre 2 que su marido, el hombre 1, y
+			//Si a la mujer 1 le gusta mÃ¡s el hombre 2 que su marido, el hombre 1, y
 			//al hombre 2 le ocurre lo mismo con ella, hay inestabilidad.
 			if ((m1.getPuesto(h2) < m1.getPuesto(h1)) &&
 				 (h2.getPuesto(m1) < h2.getPuesto(m2)))
 				return true;
-			//En caso contrario, la asignacion consistente en sólo estas dos parejas
+			//En caso contrario, la asignacion consistente en sÃ³lo estas dos parejas
 			//es estable.
 			return false;
 		}

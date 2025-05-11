@@ -10,8 +10,8 @@ public class ArchivoEntrada {
 	public final static String EOFstr = "" + Character.MAX_VALUE;
 	public final static char EOFchr = Character.MAX_VALUE;
 	/*
-	 * Averiguar cuales son la cadena vacía que se devuelve al leer una línea en blanco
-	 * o el caracter de fin de línea (o el 1º y el último de una línea en blanco).
+	 * Averiguar cuales son la cadena vacÃ­a que se devuelve al leer una lÃ­nea en blanco
+	 * o el caracter de fin de lÃ­nea (o el 1Âº y el Ãºltimo de una lÃ­nea en blanco).
 	 * OBS: creo que son:
 	 *  TEXTO\n
 	 *  \r\n
@@ -27,8 +27,8 @@ public class ArchivoEntrada {
 	}
 
 	/*
-	 * Lee una línea del archivo de entrada.
-	 * Si ocurre un error, devuelve una cadena vacía.
+	 * Lee una lÃ­nea del archivo de entrada.
+	 * Si ocurre un error, devuelve una cadena vacÃ­a.
 	 */
 	public String readln(){
 		try{

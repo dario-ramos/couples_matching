@@ -1,0 +1,7 @@
+John:Bethany,Anna,Rose
+Smith:Bethany,Rose,Anna
+Tony:Rose,Bethany,Anna
+
+Anna:Smith,Tony,John
+Bethany:Tony,John,Smith
+Rose:Smith,Tony,John

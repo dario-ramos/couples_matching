@@ -15,16 +15,16 @@ public class tdatp2{
 	 *
 	 * Donde N es la cantidad de hombres (y mujeres) y, MujerIJ es la mujer cali-
 	 * ficada con J por el hombre I (idem para HombreIJ).
-	 * Para realizar el parseo, tengo en cuenta el hecho de que con la primer lí-
+	 * Para realizar el parseo, tengo en cuenta el hecho de que con la primera lÃ­-
 	 * nea del archivo puedo obtener los nombres de todas las mujeres (y, por lo
 	 * tanto, crearlas).
-	 * Luego, comienzo la lectura línea a línea agregando a la lista de preferen-
-	 * cias de cada hombre la mujer que aparezca (y en cada línea que leo debo
+	 * Luego, comienzo la lectura lÃ­nea a lÃ­nea agregando a la lista de preferen-
+	 * cias de cada hombre la mujer que aparezca (y en cada lÃ­nea que leo debo
 	 * crear un hombre).
 	 * Cuando llega el momento de leer las preferencias de cada mujer ya tengo a
-	 * todos los hombres creados (los creé mientras leía sus preferencias).
-	 * Para tener acceso rápido al objeto "Individuo" que representa a cada hom-
-	 * bre o a cada mujer mientras leo el archivo (esto es, identificándolos por
+	 * todos los hombres creados (los creÃ© mientras leÃ­a sus preferencias).
+	 * Para tener acceso rÃ¡pido al objeto "Individuo" que representa a cada hom-
+	 * bre o a cada mujer mientras leo el archivo (esto es, identificÃ¡ndolos por
 	 * su nombre) utilizo una tabla de hash.
 	 */
 	public static Agencia parsear(String nomArch){
@@ -33,7 +33,7 @@ public class tdatp2{
 		try{
 			entrada = new ArchivoEntrada(nomArch);
 		}catch(IOException e){
-			System.out.println("ERROR EN LA ENTRADA.");
+			System.out.println("ERROR EN LA ENTRADA: " + e.toString());
 			System.exit(1);//Sale del programa si no se puede parsear.
 		}
 		String primLineaH = entrada.readln(); //Primera linea con calificaciones de hombres
@@ -41,73 +41,71 @@ public class tdatp2{
 		TablaHash hombres = new TablaHash();
 
 		//CREO TODAS LAS MUJERES:
-		int i = 0;
-		//Me salteo el nombre del primer hombre.
-		while (primLineaH.charAt(i)!=':') i++;
-		i+=2;//Me ubico en la inicial del nombre de la primera mujer.
-		//Obtengo el nombre de todas las mujeres.
-		int iAnt = i;
-		while (i <= primLineaH.length()){
-			if((i == primLineaH.length())||(primLineaH.charAt(i)==',')){
-				//Acabo de leer el nombre de una mujer => la agrego a la lista.
-				String nombreM = primLineaH.substring(iAnt,i);
-				Individuo mujer = new Individuo(nombreM,false);
-				mujeres.add(mujer);
-				agencia.addMujer(mujer);
-				iAnt = i+1;
-			}
-			i++;
+		String seccionMujeres = primLineaH.split(":")[1];
+		String[] nombresMujeres = seccionMujeres.split(",");
+		for (String nomMujer : nombresMujeres) {
+			//Acabo de leer el nombre de una mujer => la agrego a la lista.
+			String nombreM = nomMujer.trim();
+			Individuo mujer = new Individuo(nombreM,false);
+			mujeres.add(mujer);
+			agencia.addMujer(mujer);
 		}
 
 		//CARGO LOS HOMBRES CON SUS LISTAS DE PREFERENCIAS
 		entrada.reset();
 		String linea = entrada.readln();
-		while (!linea.equals("")){//Mientras no sea una línea vacía...
+		while (!linea.equals("")){//Mientras no sea una lÃ­nea vacÃ­a...
+			String[] secciones = linea.split(":");
+			String nomHombre = secciones[0].trim();
+			Individuo hombre = new Individuo (nomHombre,true);
+			String[] nomMujeres = secciones[1].split(",");
+
 			int calif = 0;
-			i = 0;
-			//Obtengo el nombre del hombre para crearlo.
-			while (linea.charAt(i)!=':') i++;
-			Individuo hombre = new Individuo (linea.substring(0,i),true);
-			i+=2;//Me ubico en la inicial del nombre de la primera mujer.
-			//Obtengo el nombre de cada mujer y la agrego a la lista de preferencias.
-			iAnt = i;
-			while (i<=linea.length()){
-				if((i == linea.length())||(linea.charAt(i)==',')){
-					//Acabo de leer el nombre de una mujer => la agrego a la lista.
-					String nombreM = linea.substring(iAnt,i);
-					Individuo mujer = mujeres.get(nombreM);
-					hombre.setPuesto(mujer,calif);
-					iAnt = i+1;
-					calif++;
-				}
-				i++;
+			for (String nomMujer : nomMujeres ) {
+				Individuo mujer = mujeres.get(nomMujer);
+				hombre.setPuesto(mujer, calif);
+				calif++;
 			}
+
 			hombres.add(hombre);
-			//La última línea es para que cuando cargue a las mujeres ya tenga a
+			//La Ãºltima lÃ­nea es para que cuando cargue a las mujeres ya tenga a
 			//todos los hombres cargados.
 			agencia.addHombre(hombre);
 			linea = entrada.readln();
 		}
+
 		//CARGO LAS MUJERES CON SUS LISTAS DE PREFERENCIAS
 		//Valen los mismos comentarios que para la carga de los hombres.
 		linea = entrada.readln();
 		while (linea != null){//Mientras no llegue al fin de archivo...
+			String[] secciones = linea.split(":");
+			String nomMujer = secciones[0].trim();
+			Individuo mujer = mujeres.get(nomMujer);
+			String[] nomHombres = secciones[1].split(",");
+
 			int calif = 0;
-			i = 0;
-			while (linea.charAt(i)!=':') i++; //Obtengo el nombre de la mujer.
-			Individuo mujer = mujeres.get(linea.substring(0,i));
-			i+=2;
-			iAnt = i;
-			while (i<=linea.length()){
-				if((i == linea.length())||(linea.charAt(i)==',')){
-					String nombreH = linea.substring(iAnt,i);
-					Individuo hombre = hombres.get(nombreH);
-					mujer.setPuesto(hombre,calif);
-					iAnt = i+1;
-					calif++;
-				}
-				i++;
+			for (String nomHombre : nomHombres ) {
+				Individuo hombre = hombres.get(nomHombre);
+				mujer.setPuesto(hombre, calif);
+				calif++;
 			}
+
+//			int calif = 0;
+//			i = 0;
+//			while (linea.charAt(i)!=':') i++; //Obtengo el nombre de la mujer.
+//			Individuo mujer = mujeres.get(linea.substring(0,i));
+//			i+=2;
+//			iAnt = i;
+//			while (i<=linea.length()){
+//				if((i == linea.length())||(linea.charAt(i)==',')){
+//					String nombreH = linea.substring(iAnt,i);
+//					Individuo hombre = hombres.get(nombreH);
+//					mujer.setPuesto(hombre,calif);
+//					iAnt = i+1;
+//					calif++;
+//				}
+//				i++;
+//			}
 			linea = entrada.readln();
 		}
 		return agencia;
@@ -118,7 +116,7 @@ public class tdatp2{
 	 * ------------------------------
 	 * Cantidad de parejas: XXXX
 	 * Tiempo requerido: XXXXms
-	 * -----------SOLUCIÓN-----------
+	 * -----------SOLUCIÃ“N-----------
 	 * #1: Hombre1 - Mujer1
 	 * #2: Hombre2 - Mujer2
 	 * ...
@@ -135,7 +133,7 @@ public class tdatp2{
 		linea = "Tiempo requerido: " + tiempo + "ms";
 		salida.println(linea);
 		System.out.println(linea);
-		linea = "-----------SOLUCIÓN-----------";
+		linea = "-----------SOLUCIÃ“N-----------";
 		salida.println(linea);
 		System.out.println(linea);
 		for (int i=0; i<parejas.size(); i++){
@@ -151,19 +149,24 @@ public class tdatp2{
 	}
 
 	public static void main (String[] args){
+		if (args.length == 0) {
+			System.err.println("error: es necesario especificar el archivo de entrada");
+			System.exit(1);
+		}
+
 		long Ti,Tf;
 		ArrayList parejas = new ArrayList();
 		Agencia agencia = parsear(args[0]);
 		
 		//Se llama al recolector de basura antes de comenzar, por las dudas.
 		System.gc();
-		//Comienza la medición del tiempo (se desprecia el parseo).
+		//Comienza la mediciÃ³n del tiempo (se desprecia el parseo).
 		Ti = System.currentTimeMillis();
 		parejas = agencia.asignarConBT();
-		Tf = System.currentTimeMillis();  // Finaliza la medición del tiempo.
+		Tf = System.currentTimeMillis();  // Finaliza la mediciÃ³n del tiempo.
 		salida("sc_BT.txt",parejas,Tf-Ti);
 
-		//Rompo todas las parejas para que los individuos estén solteros al comenzar el
+		//Rompo todas las parejas para que los individuos estÃ©n solteros al comenzar el
 		//algoritmo de Gale & Shapley.
 		for (int i = 0;i<parejas.size();i++){
 			Pareja p = (Pareja) parejas.get(i);

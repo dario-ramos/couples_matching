@@ -1,17 +1,17 @@
 import parva.Parva;
 /*
- * Esta clase modela a un individuo conteniendo toda la informaciÛn requerida
+ * Esta clase modela a un individuo conteniendo toda la informaci√≥n requerida
  * para resolver el problema de las asignaciones estables.
  */
 public class Individuo {
 	private String nombre;
 	private boolean hombre; //Indica si es o no un hombre.
 	private int ID;
-	private Pareja pareja; //Pareja a la cual pertenece Èste individuo.
+	private Pareja pareja; //Pareja a la cual pertenece √©ste individuo.
 	private int[] posiciones; //Posiciones en el ranking.
 	private int cantRanqueados;
 	private Parva pretendidos; //ID de los individuos pretendidos ordenados por puesto.
-	private Parva pretendientes;  //Individuos que se le declararon a Èste.
+	private Parva pretendientes;  //Individuos que se le declararon a √©ste.
 
 	public Individuo (String nombre, boolean hombre){
 		this.nombre = nombre;
@@ -60,7 +60,7 @@ public class Individuo {
 		return posiciones[i.getNumero()];
 	}
 	/*
-	 * Devuelve el individuo preferido por Èste. En la prÛxima llamada, devolver· el 
+	 * Devuelve el individuo preferido por √©ste. En la pr√≥xima llamada, devolver√° el 
 	 * que lo sigue.
 	 */
 	public Individuo mejorPretendido(){
@@ -94,17 +94,17 @@ public class Individuo {
 		this.hombre = hombre;
 	}
 	/*
-	 * Si dos individuos tienen el mismo n˙mero, no ser·n distinguidos por
-	 * este mÈtodo.
-	 * Si se pasa por par·metro un puesto negativo, ser· asignado como
+	 * Si dos individuos tienen el mismo n√∫mero, no ser√°n distinguidos por
+	 * este m√©todo.
+	 * Si se pasa por par√°metro un puesto negativo, ser√° asignado como
 	 * cero.
 	 */
 	public void setPuesto(Individuo i, int puesto){
 		if (i.getNumero() > cantRanqueados){
-			//Aumento el tamaÒo del vector para que tenga m·s cantidad de posiciones
-			//de tal modo que exista una posiciÛn posiciones[i.getNumero()]
-			//pero, de paso, aprovecho y lo hago m·s grande a˙n para prevenir
-			//futuros aumentos de tamaÒo ya que son costosos.
+			//Aumento el tama√±o del vector para que tenga m√°s cantidad de posiciones
+			//de tal modo que exista una posici√≥n posiciones[i.getNumero()]
+			//pero, de paso, aprovecho y lo hago m√°s grande a√∫n para prevenir
+			//futuros aumentos de tama√±o ya que son costosos.
 			int nuevoTam= Math.round(i.getNumero() * 1.5f);
 			int[] nuevo = new int[nuevoTam];
 			for (int j=0; j<cantRanqueados; j++) nuevo[j] = posiciones[j];

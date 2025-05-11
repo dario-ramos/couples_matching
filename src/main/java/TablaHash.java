@@ -18,10 +18,10 @@ public class TablaHash {
 	/*
 	 * Devuelve el individuo cuyo nombre es el dado.
 	 * En caso de que no pertenezca a la tabla, devuelve null.
-	 * Para hallarlo se aplica el siguiente mÈtodo:
+	 * Para hallarlo se aplica el siguiente m√©todo:
 	 * 1_ Calculo: "a = hashCode (nombre del individuo)".
-	 * 2_ Si la ubicaciÛn est· vacÌa, devuelvo null.
-	 * 3_ Si la ubicaciÛn est· ocupada por el individuo pedido, lo devuelvo.
+	 * 2_ Si la ubicaci√≥n est√° vac√≠a, devuelvo null.
+	 * 3_ Si la ubicaci√≥n est√° ocupada por el individuo pedido, lo devuelvo.
 	 * 4_ En otro caso, sumo uno a "a" y vuelvo al paso 2.
 	 */
 	public Individuo get(String nombre){
@@ -35,13 +35,13 @@ public class TablaHash {
 
 	/*
 	 * Agrega el individuo a la tabla.
-	 * Para elegir la ubicaciÛn en la que se coloca se siguen los siguientes pa-
+	 * Para elegir la ubicaci√≥n en la que se coloca se siguen los siguientes pa-
 	 * sos:
 	 * 1_ Calculo: "a = hashCode (nombre del individuo)".
-	 * 2_ Si la ubicaciÛn est· vacÌa, lo agrego.
+	 * 2_ Si la ubicaci√≥n est√° vac√≠a, lo agrego.
 	 * 3_ En otro caso, sumo uno a "a" y vuelvo al paso 2.
-	 * Si llevo la tabla a un nivel de ocupaciÛn de m·s del 70%, duplico su tama-
-	 * Òo y reubico todos los elementos.
+	 * Si llevo la tabla a un nivel de ocupaci√≥n de m√°s del 70%, duplico su tama-
+	 * √±o y reubico todos los elementos.
 	 */
 	public void add(Individuo i){
 		int cod = hashCode (i.getNombre());
@@ -62,17 +62,17 @@ public class TablaHash {
 */
 
 	/*
-	 * Devuelve el cÛdigo de hash de un individuo dado su nombre.
+	 * Devuelve el c√≥digo de hash de un individuo dado su nombre.
 	 * codigo = c0 * B^n + c1 * B^(n-1) + ... + cn
-	 * Donde ci es el i-Èsimo caracter del nombre (convertido a min˙sculas y qui-
-	 * t·ndole los espacios que haya antes de la primera inicial o despuÈs de la
-	 * ˙ltima letra).
-	 * B = 26 (de este modo, si no hubiera restricciones como el tamaÒo de la ta-
-	 * bla de hash o de un m·ximo representable por "int", la asignaciÛn del cÛ-
-	 * digo serÌa biunÌvoca).
+	 * Donde ci es el i-√©simo caracter del nombre (convertido a min√∫sculas y qui-
+	 * t√°ndole los espacios que haya antes de la primera inicial o despu√©s de la
+	 * √∫ltima letra).
+	 * B = 26 (de este modo, si no hubiera restricciones como el tama√±o de la ta-
+	 * bla de hash o de un m√°ximo representable por "int", la asignaci√≥n del c√≥-
+	 * digo ser√≠a biun√≠voca).
 	 */ 
 	private int hashCode(String nombre){
-		//El nombre en min˙sculas y sin espacios al comienzo o al final.
+		//El nombre en min√∫sculas y sin espacios al comienzo o al final.
 		String cad = nombre.trim().toLowerCase();
 		int codigo = (int)(nombre.charAt(0));
 		for (int i=1;i<cad.length();i++){
