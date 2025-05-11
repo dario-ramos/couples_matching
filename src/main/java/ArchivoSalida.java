@@ -27,8 +27,8 @@ public class ArchivoSalida {
 		archivo = abrir (nomArch,true);
 	}
 	/*
-	 *Imprime una lÌnea en el archivo y genera un
-	 *caracter "fin de lÌnea".
+	 *Imprime una l√≠nea en el archivo y genera un
+	 *caracter "fin de l√≠nea".
 	 */
 	public void println(boolean b){archivo.println(b);}
 	public void println(char c)	{archivo.println(c);}
@@ -40,7 +40,7 @@ public class ArchivoSalida {
 	public void println(Object o)	{archivo.println(o.toString());}
 	/*
 	 *Imprime una cadena de caracteres en el archivo y no
-	 *genera el "fin de lÌnea".
+	 *genera el "fin de l√≠nea".
 	 */
 	public void print(boolean b)	{archivo.print(b);}
 	public void print(char c)		{archivo.print(c);}
@@ -51,7 +51,7 @@ public class ArchivoSalida {
 	public void print(long l)		{archivo.print(l);}
 	public void print(Object o)	{archivo.print(o.toString());}
 	/*
-	 *Abre el archivo nomArch prepar·ndolo para la escritura.
+	 *Abre el archivo nomArch prepar√°ndolo para la escritura.
 	 *Si "append == false", borra todo el contenido previo del
 	 *archivo que se abre.
 	 */
