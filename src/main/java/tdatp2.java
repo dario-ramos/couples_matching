@@ -90,22 +90,6 @@ public class tdatp2{
 				calif++;
 			}
 
-//			int calif = 0;
-//			i = 0;
-//			while (linea.charAt(i)!=':') i++; //Obtengo el nombre de la mujer.
-//			Individuo mujer = mujeres.get(linea.substring(0,i));
-//			i+=2;
-//			iAnt = i;
-//			while (i<=linea.length()){
-//				if((i == linea.length())||(linea.charAt(i)==',')){
-//					String nombreH = linea.substring(iAnt,i);
-//					Individuo hombre = hombres.get(nombreH);
-//					mujer.setPuesto(hombre,calif);
-//					iAnt = i+1;
-//					calif++;
-//				}
-//				i++;
-//			}
 			linea = entrada.readln();
 		}
 		return agencia;
