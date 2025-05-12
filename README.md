@@ -38,7 +38,7 @@ Run the Docker image, mounting the input file as a Docker volume and
 passing its bound path in the container as an argument:
 
 ```
-docker run --rm -v $PWD/couples_matching/src/main/resources/sample_input.txt:/input.txt couples-matching /input.txt
+docker run --rm -v $PWD/src/main/resources/sample_input.txt:/input.txt couples-matching /input.txt
 ```
 
 Notice that this approach allows us to change the input file
