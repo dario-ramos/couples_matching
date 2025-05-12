@@ -1,3 +1,5 @@
+package couplesmatching;
+
 /*
  * Clase que representa una pareja entre un hombre y una mujer.
  */

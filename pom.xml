@@ -15,7 +15,12 @@
   </properties>
 
   <dependencies>
-    <!-- Add your dependencies here -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>5.10.0</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -31,7 +36,7 @@
           </descriptorRefs>
           <archive>
             <manifest>
-              <mainClass>tdatp2</mainClass>
+              <mainClass>couplesmatching.tdatp2</mainClass>
             </manifest>
           </archive>
         </configuration>

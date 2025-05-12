@@ -1,3 +1,5 @@
+package couplesmatching;
+
 import java.util.ArrayList;
 import java.io.IOException;
 
@@ -23,7 +25,7 @@ public class tdatp2{
 	 * crear un hombre).
 	 * Cuando llega el momento de leer las preferencias de cada mujer ya tengo a
 	 * todos los hombres creados (los creé mientras leía sus preferencias).
-	 * Para tener acceso rápido al objeto "Individuo" que representa a cada hom-
+	 * Para tener acceso rápido al objeto "couplesmatching.Individuo" que representa a cada hom-
 	 * bre o a cada mujer mientras leo el archivo (esto es, identificándolos por
 	 * su nombre) utilizo una tabla de hash.
 	 */

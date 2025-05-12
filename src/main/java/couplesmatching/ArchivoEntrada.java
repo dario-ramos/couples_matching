@@ -1,3 +1,5 @@
+package couplesmatching;
+
 import java.io.*;
 import java.lang.Character;
 
