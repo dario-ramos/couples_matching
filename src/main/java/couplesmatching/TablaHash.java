@@ -1,3 +1,8 @@
+package couplesmatching;
+
+// TODO: The get method fails with small table sizes because it introduces collisions
+// and then get returns on the first null it finds. It doesn't take collisions into
+// account. The best solution is to replace this homebrew data structure with a Dictionary
 public class TablaHash {
 	private Individuo[] individuos;
 	private int tamanio;
@@ -77,10 +82,10 @@ public class TablaHash {
 		int codigo = (int)(nombre.charAt(0));
 		for (int i=1;i<cad.length();i++){
 			codigo*= 5;
-			codigo+= (nombre.charAt(0) - 'a') + 1;
+			codigo+= (nombre.charAt(i) - 'a') + 1;
 			codigo%= tamanio;
 		}
-		return codigo;
+		return Math.abs(codigo);
 	}
 	/*
 	 * Duplica el tamanio de la tabla de hash.

@@ -1,7 +1,11 @@
-import parva.Parva;
+package couplesmatching;
+
+import couplesmatching.parva.Parva;
 /*
  * Esta clase modela a un individuo conteniendo toda la información requerida
  * para resolver el problema de las asignaciones estables.
+ * TODO If created with the second constructor that specifies the couple count, Gale Shapley goes into
+ *  an infinite loop.
  */
 public class Individuo {
 	private String nombre;
