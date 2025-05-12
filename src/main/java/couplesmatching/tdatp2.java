@@ -2,6 +2,9 @@ package couplesmatching;
 
 import java.util.ArrayList;
 import java.io.IOException;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Map;
 
 public class tdatp2{
 	/*
@@ -39,8 +42,8 @@ public class tdatp2{
 			System.exit(1);//Sale del programa si no se puede parsear.
 		}
 		String primLineaH = entrada.readln(); //Primera linea con calificaciones de hombres
-		TablaHash mujeres = new TablaHash();
-		TablaHash hombres = new TablaHash();
+		Map<String, Individuo> mujeres = new HashMap<>();
+		Map<String, Individuo> hombres = new HashMap<>();
 
 		//CREO TODAS LAS MUJERES:
 		String seccionMujeres = primLineaH.split(":")[1];
@@ -49,7 +52,7 @@ public class tdatp2{
 			//Acabo de leer el nombre de una mujer => la agrego a la lista.
 			String nombreM = nomMujer.trim();
 			Individuo mujer = new Individuo(nombreM,false);
-			mujeres.add(mujer);
+			mujeres.put(mujer.getNombre(), mujer);
 			agencia.addMujer(mujer);
 		}
 
@@ -69,7 +72,7 @@ public class tdatp2{
 				calif++;
 			}
 
-			hombres.add(hombre);
+			hombres.put(hombre.getNombre(), hombre);
 			//La última línea es para que cuando cargue a las mujeres ya tenga a
 			//todos los hombres cargados.
 			agencia.addHombre(hombre);
