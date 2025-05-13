@@ -29,13 +29,13 @@ Rose:Smith,Tony,John""";
         AgencyBuilder builder = new AgencyBuilder(inputReader);
 
         assertDoesNotThrow( () -> {
-            Agencia agency = builder.build();
-            assertIndividual("John", new String[]{"Bethany", "Anna", "Rose"}, agency.getHombre(0));
-            assertIndividual("Smith", new String[]{"Bethany", "Rose", "Anna"}, agency.getHombre(1));
-            assertIndividual("Tony", new String[]{"Rose", "Bethany", "Anna"}, agency.getHombre(2));
-            assertIndividual("Anna", new String[]{"Smith", "Tony", "John"}, agency.getMujer(1));
-            assertIndividual("Bethany", new String[]{"Tony", "John", "Smith"}, agency.getMujer(0));
-            assertIndividual("Rose", new String[]{"Smith", "Tony", "John"}, agency.getMujer(2));
+            Agency agency = builder.build();
+            assertIndividual("John", new String[]{"Bethany", "Anna", "Rose"}, agency.getMan(0));
+            assertIndividual("Smith", new String[]{"Bethany", "Rose", "Anna"}, agency.getMan(1));
+            assertIndividual("Tony", new String[]{"Rose", "Bethany", "Anna"}, agency.getMan(2));
+            assertIndividual("Anna", new String[]{"Smith", "Tony", "John"}, agency.getWoman(1));
+            assertIndividual("Bethany", new String[]{"Tony", "John", "Smith"}, agency.getWoman(0));
+            assertIndividual("Rose", new String[]{"Smith", "Tony", "John"}, agency.getWoman(2));
         } );
     }
 
@@ -65,14 +65,14 @@ Rose:Smith,Tony,John""";
         );
     }
 
-    private static void assertIndividual(String expectedName, String[] expectedPreferences, Individuo individual) {
-        assertEquals(expectedName, individual.getNombre());
-        Individuo favoriteCandidate = individual.mejorPretendido();
+    private static void assertIndividual(String expectedName, String[] expectedPreferences, Person individual) {
+        assertEquals(expectedName, individual.getName());
+        Person favoriteCandidate = individual.extractFavoriteIntended();
         assertNotNull(favoriteCandidate);
         int i = 0;
         while (favoriteCandidate != null) {
-            assertEquals(expectedPreferences[i], favoriteCandidate.getNombre());
-            favoriteCandidate = individual.mejorPretendido();
+            assertEquals(expectedPreferences[i], favoriteCandidate.getName());
+            favoriteCandidate = individual.extractFavoriteIntended();
             i++;
         }
     }

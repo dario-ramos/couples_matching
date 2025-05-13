@@ -9,73 +9,73 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AgencyTest {
 
-    private Agencia agency;
-    private Individuo john, smith, tony;
-    private Individuo anna, bethany, rose;
+    private Agency agency;
+    private Person john, smith, tony;
+    private Person anna, bethany, rose;
 
     @BeforeEach
     void setUp() {
-        agency = new Agencia();
-        john = new Individuo("John", true);
-        smith = new Individuo("Smith", true);
-        tony = new Individuo("Tony", true);
-        anna = new Individuo("Anna", false);
-        bethany = new Individuo("Bethany", false);
-        rose = new Individuo("Rose", false);
-        agency.addHombre(john);
-        agency.addHombre(smith);
-        agency.addHombre(tony);
-        agency.addMujer(anna);
-        agency.addMujer(bethany);
-        agency.addMujer(rose);
+        agency = new Agency();
+        john = new Person("John", true);
+        smith = new Person("Smith", true);
+        tony = new Person("Tony", true);
+        anna = new Person("Anna", false);
+        bethany = new Person("Bethany", false);
+        rose = new Person("Rose", false);
+        agency.addMan(john);
+        agency.addMan(smith);
+        agency.addMan(tony);
+        agency.addWoman(anna);
+        agency.addWoman(bethany);
+        agency.addWoman(rose);
         setUpMenPreferences();
         setUpWomenPreferences();
     }
 
     void setUpMenPreferences() {
-        john.setPuesto(bethany, 0);
-        john.setPuesto(anna, 1);
-        john.setPuesto(rose, 2);
-        smith.setPuesto(bethany, 0);
-        smith.setPuesto(rose, 1);
-        smith.setPuesto(anna, 2);
-        tony.setPuesto(rose, 0);
-        tony.setPuesto(bethany, 1);
-        tony.setPuesto(anna, 2);
+        john.setRanking(bethany, 0);
+        john.setRanking(anna, 1);
+        john.setRanking(rose, 2);
+        smith.setRanking(bethany, 0);
+        smith.setRanking(rose, 1);
+        smith.setRanking(anna, 2);
+        tony.setRanking(rose, 0);
+        tony.setRanking(bethany, 1);
+        tony.setRanking(anna, 2);
     }
 
     void setUpWomenPreferences() {
-        anna.setPuesto(smith, 0);
-        anna.setPuesto(tony, 1);
-        anna.setPuesto(john, 2);
-        bethany.setPuesto(tony, 0);
-        bethany.setPuesto(john, 1);
-        bethany.setPuesto(smith, 2);
-        rose.setPuesto(smith, 0);
-        rose.setPuesto(tony, 1);
-        rose.setPuesto(john, 2);
+        anna.setRanking(smith, 0);
+        anna.setRanking(tony, 1);
+        anna.setRanking(john, 2);
+        bethany.setRanking(tony, 0);
+        bethany.setRanking(john, 1);
+        bethany.setRanking(smith, 2);
+        rose.setRanking(smith, 0);
+        rose.setRanking(tony, 1);
+        rose.setRanking(john, 2);
     }
 
     @Test
     void galeShapleySolution() {
-        ArrayList couples = agency.asignarConGS();
+        ArrayList couples = agency.assignUsingGaleShapley();
 
-        assertCoupleEquality(new Pareja(smith, rose), (Pareja) couples.get(0));
-        assertCoupleEquality(new Pareja(tony, bethany), (Pareja) couples.get(1));
-        assertCoupleEquality(new Pareja(john, anna), (Pareja) couples.get(2));
+        assertCoupleEquality(new Couple(smith, rose), (Couple) couples.get(0));
+        assertCoupleEquality(new Couple(tony, bethany), (Couple) couples.get(1));
+        assertCoupleEquality(new Couple(john, anna), (Couple) couples.get(2));
     }
 
     @Test
     void backtrackingSolution() {
-        ArrayList couples = agency.asignarConBT();
+        ArrayList couples = agency.assignUsingBacktracking();
 
-        assertCoupleEquality(new Pareja(john, anna), (Pareja) couples.get(0));
-        assertCoupleEquality(new Pareja(smith, rose), (Pareja) couples.get(1));
-        assertCoupleEquality(new Pareja(tony, bethany), (Pareja) couples.get(2));
+        assertCoupleEquality(new Couple(john, anna), (Couple) couples.get(0));
+        assertCoupleEquality(new Couple(smith, rose), (Couple) couples.get(1));
+        assertCoupleEquality(new Couple(tony, bethany), (Couple) couples.get(2));
     }
 
-    private void assertCoupleEquality(Pareja couple1, Pareja couple2) {
-        assertEquals(couple1.getHombre().getNombre(), couple2.getHombre().getNombre());
-        assertEquals(couple1.getMujer().getNombre(), couple2.getMujer().getNombre());
+    private void assertCoupleEquality(Couple couple1, Couple couple2) {
+        assertEquals(couple1.getMan().getName(), couple2.getMan().getName());
+        assertEquals(couple1.getWoman().getName(), couple2.getWoman().getName());
     }
 }

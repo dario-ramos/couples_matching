@@ -36,7 +36,7 @@
           </descriptorRefs>
           <archive>
             <manifest>
-              <mainClass>couplesmatching.tdatp2</mainClass>
+              <mainClass>couplesmatching.CLIRunner</mainClass>
             </manifest>
           </archive>
         </configuration>

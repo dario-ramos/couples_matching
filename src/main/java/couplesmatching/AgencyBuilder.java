@@ -17,42 +17,33 @@ public class AgencyBuilder {
         this.input = input;
     }
 
-    /* TODO: Translate
-     * Lectura del archivo con los datos de entrada.
-     * El formato de la entrada es:
-     * Hombre1: Mujer11,Mujer12,Mujer13,...,Mujer1N
+    /* Expected input data format:
+     * Man1: Woman11,Woman12,Woman13,...,Woman1N
      * ...
-     * HombreN: MujerN1,MujerN2,MujerN3,...,MujerNN
-     *
-     * Mujer1: Hombre11,Hombre12,Hombre13,...,Hombre1N
+     * ManN: WomanN1,WomanN2,WomanN3,...,WomanNN
+     * (mandatory blank line that separates men and women)
+     * Woman1: Man11,Man12,Man13,...,Man1N
      * ...
-     * MujerN: HombreN1,HombreN2,HombreN3,...,HombreNN
+     * WomanN: WomanN1,WomanN2,WomanN3,...,WomanNN
      *
-     * Donde N es la cantidad de hombres (y mujeres) y, MujerIJ es la mujer cali-
-     * ficada con J por el hombre I (idem para HombreIJ).
-     * Para realizar el parseo, tengo en cuenta el hecho de que con la primera lí-
-     * nea del archivo puedo obtener los nombres de todas las mujeres (y, por lo
-     * tanto, crearlas).
-     * Luego, comienzo la lectura línea a línea agregando a la lista de preferen-
-     * cias de cada hombre la mujer que aparezca (y en cada línea que leo debo
-     * crear un hombre).
-     * Cuando llega el momento de leer las preferencias de cada mujer ya tengo a
-     * todos los hombres creados (los creé mientras leía sus preferencias).
-     * Para tener acceso rápido al objeto "couplesmatching.Individuo" que representa a cada hom-
-     * bre o a cada mujer mientras leo el archivo (esto es, identificándolos por
-     * su nombre) utilizo una tabla de hash.
+     * In this context:
+     * - N: amount of men (also women)
+     * - WomanIJ: name of the woman qualified as J-th best by the I-th man.
+     * - ManIJ: name of the man qualified as J-th best by the I-th woman.
+     * The returned agency will then contain all men and women, each with their full ranking
+     * of all members of the opposite sex.
      */
-    public Agencia build() throws InvalidInputException, IOException {
-        Agencia agency = new Agencia();
+    public Agency build() throws InvalidInputException, IOException {
+        Agency agency = new Agency();
 
-        Map<String, Individuo> women = parseWomen(agency);
-        Map<String, Individuo> men = parseMenWithTheirPreferences(agency, women);
+        Map<String, Person> women = parseWomen(agency);
+        Map<String, Person> men = parseMenWithTheirPreferences(agency, women);
         parseWomenPreferences(women, men);
 
         return agency;
     }
 
-    private Map<String, Individuo> parseWomen(Agencia agency) throws InvalidInputException, IOException {
+    private Map<String, Person> parseWomen(Agency agency) throws InvalidInputException, IOException {
         if (!input.markSupported()) {
             throw new IOException("Input stream does not support marking. Try a FileReader");
         }
@@ -69,11 +60,11 @@ public class AgencyBuilder {
         input.reset();
 
         String[] womenNames = getWomenNames(firstMaleLine);
-        Map<String, Individuo> women = new HashMap<>();
+        Map<String, Person> women = new HashMap<>();
         for (String womanName : womenNames) {
-            Individuo woman = new Individuo(womanName.trim(),false);
-            women.put(woman.getNombre(), woman);
-            agency.addMujer(woman);
+            Person woman = new Person(womanName.trim(),false);
+            women.put(woman.getName(), woman);
+            agency.addWoman(woman);
         }
 
         return women;
@@ -89,11 +80,11 @@ public class AgencyBuilder {
         return womenSection.split(",");
     }
 
-    private Map<String, Individuo> parseMenWithTheirPreferences(
-            Agencia agency, Map<String, Individuo> women
+    private Map<String, Person> parseMenWithTheirPreferences(
+            Agency agency, Map<String, Person> women
     ) throws InvalidInputException, IOException {
 
-        Map<String, Individuo> men = new HashMap<>();
+        Map<String, Person> men = new HashMap<>();
         String line = input.readLine();
         while (!line.isEmpty()){
             String[] sections = line.split(":");
@@ -102,17 +93,17 @@ public class AgencyBuilder {
             }
 
             String manName = sections[0].trim();
-            Individuo man = new Individuo (manName,true);
+            Person man = new Person(manName,true);
             String[] womenNames = sections[1].split(",");
 
             int calif = 0;
             for (String womanName : womenNames ) {
-                man.setPuesto(women.get(womanName), calif);
+                man.setRanking(women.get(womanName), calif);
                 calif++;
             }
 
-            men.put(man.getNombre(), man);
-            agency.addHombre(man);
+            men.put(man.getName(), man);
+            agency.addMan(man);
             line = input.readLine();
         }
 
@@ -120,7 +111,7 @@ public class AgencyBuilder {
     }
 
     private void parseWomenPreferences(
-            Map<String, Individuo> women, Map<String, Individuo> men
+            Map<String, Person> women, Map<String, Person> men
     ) throws InvalidInputException, IOException {
         String line = input.readLine();
         while (line != null){
@@ -130,12 +121,12 @@ public class AgencyBuilder {
             }
 
             String womanName = sections[0].trim();
-            Individuo woman = women.get(womanName);
+            Person woman = women.get(womanName);
             String[] menNames = sections[1].split(",");
 
             int calif = 0;
             for (String manName : menNames ) {
-                woman.setPuesto(men.get(manName), calif);
+                woman.setRanking(men.get(manName), calif);
                 calif++;
             }
 
